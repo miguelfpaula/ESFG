@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lies, denk nach, gestalte mit — ESFG</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: system-ui, sans-serif; background: #fff; color: #111; max-width: 480px; margin: 0 auto; }
+.site-header { padding: 1rem 1.25rem 0.75rem; border-bottom: 1px solid #e5e5e5; position: sticky; top: 0; background: #fff; z-index: 10; }
+.site-header h1 { font-size: 16px; font-weight: 500; }
+.site-header p { font-size: 11px; color: #666; margin-top: 2px; }
+.section-block { border-bottom: 1px solid #e5e5e5; }
+.section-top { padding: 1.25rem 1.25rem 1rem; }
+.section-tag { font-size: 10px; font-weight: 500; color: #aaa; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px; }
+.section-text { font-size: 13px; line-height: 1.75; cursor: text; user-select: text; }
+.section-text p { margin-bottom: 0.5rem; }
+.section-text p:last-child { margin-bottom: 0; }
+.propose-toggle { width: 100%; padding: 0.75rem 1.25rem; background: #f9f9f7; border: none; border-top: 1px solid #e5e5e5; font-size: 13px; color: #555; cursor: pointer; display: flex; align-items: center; justify-content: space-between; }
+.propose-toggle .chevron { font-size: 14px; transition: transform 0.2s; }
+.propose-toggle.open .chevron { transform: rotate(180deg); }
+.propose-panel { display: none; padding: 1rem 1.25rem; background: #f9f9f7; border-top: 1px solid #e5e5e5; }
+.propose-panel.open { display: block; }
+.hint { font-size: 11px; color: #aaa; margin-bottom: 0.6rem; font-style: italic; }
+.field-label { font-size: 11px; color: #aaa; margin-bottom: 3px; margin-top: 8px; }
+.selected-text-box { width: 100%; font-size: 12px; padding: 7px 9px; border-radius: 8px; border: 1px solid #e5e5e5; background: #fff; color: #aaa; min-height: 48px; font-family: inherit; line-height: 1.5; font-style: italic; }
+.selected-text-box.has-selection { color: #111; border-color: #bbb; font-style: normal; }
+.correction-hint { font-size: 11px; color: #c0392b; margin-top: 4px; display: none; }
+.correction-hint.visible { display: block; }
+textarea { width: 100%; font-size: 12px; padding: 7px 9px; border-radius: 8px; border: 1px solid #e5e5e5; background: #fff; color: #111; resize: vertical; min-height: 60px; font-family: inherit; line-height: 1.5; }
+.btn-submit { margin-top: 10px; width: 100%; background: #111; color: #fff; border: none; border-radius: 8px; padding: 10px 12px; font-size: 13px; cursor: pointer; }
+.btn-submit:disabled { opacity: 0.35; cursor: default; }
+.votes-panel { padding: 0 1.25rem 1rem; background: #f9f9f7; }
+.proposals-title { font-size: 10px; font-weight: 500; color: #aaa; text-transform: uppercase; letter-spacing: 0.06em; padding-top: 0.75rem; margin-bottom: 0.5rem; }
+.vote-card { background: #fff; border: 1px solid #e5e5e5; border-radius: 8px; padding: 0.65rem; margin-bottom: 0.5rem; }
+.vc-original { font-size: 10px; color: #aaa; font-style: italic; margin-bottom: 4px; }
+.vc-new { font-size: 12px; line-height: 1.5; margin-bottom: 7px; }
+.vote-row { display: flex; gap: 6px; }
+.btn-vote { flex: 1; padding: 6px; border-radius: 8px; border: 1px solid #e5e5e5; background: transparent; cursor: pointer; font-size: 12px; display: flex; align-items: center; justify-content: center; gap: 4px; color: #666; }
+.btn-vote.voted-up { background: #EAF3DE; border-color: #639922; color: #3B6D11; pointer-events: none; }
+.btn-vote.voted-down { background: #FCEBEB; border-color: #E24B4A; color: #A32D2D; pointer-events: none; }
+.btn-ver-mais { width: 100%; padding: 8px; background: transparent; border: 1px solid #e5e5e5; border-radius: 8px; font-size: 12px; color: #666; cursor: pointer; margin-top: 4px; }
+.btn-ver-mais:hover { background: #fff; }
+.pdf-bar { padding: 1rem 1.25rem; border-top: 1px solid #e5e5e5; background: #fff; }
+.btn-pdf { width: 100%; background: #111; color: #fff; border: none; border-radius: 8px; padding: 12px; font-size: 14px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; }
+::selection { background: #B5D4F4; color: #042C53; }
+</style>
+</head>
+<body>
+
+<div class="site-header">
+  <h1>Lies, denk nach, gestalte mit</h1>
+  <p>ESFG — Wähle den Text aus, den du ändern möchtest</p>
+</div>
+
+<div id="all-sections"></div>
+
+<div class="pdf-bar">
+  <button class="btn-pdf" onclick="downloadFile()">
+    <i class="ti ti-download"></i>
+    Herunterladen mit Änderungen
+  </button>
+</div>
+
+<script>
+const VISIBLE_LIMIT = 2;
+
+const sections = [
+  {
+    id: 'einleitung',
+    tag: 'I. Einleitung',
+    text: `Dies ist eine Steuer auf das Bruttogesamteinkommen. Die Einkommensquelle ist unerheblich, mit Ausnahme bereits versteuerter Ersparnisse. Es handelt sich nicht um eine Vermögenssteuer. Die Einfachheit ist beabsichtigt — sie dient genau dem Zweck, denjenigen entgegenzuwirken, die über ausreichende Mittel verfügen, um professionelle Buchhalter und Steuerberater zu beauftragen.\n\nDies erscheint mir ein Gebot elementarer Gerechtigkeit: Es ist kaum zu rechtfertigen, dass ein Arbeitnehmer, der den gesetzlichen Mindestlohn verdient, proportional mehr beitragen soll als jemand, der von Kapitalerträgen lebt. Verpflegungszuschüsse und Fahrtkostenzuschüsse sind von der Bemessungsgrundlage ausgenommen.`
+  },
+  {
+    id: 'begruendung',
+    tag: 'II. Ethische und rechtliche Begründung',
+    text: `Das elementarste Gebot steuerlicher Gerechtigkeit verlangt, dass Besserverdienende proportional nicht weniger zahlen als diejenigen, die den gesetzlichen Mindestlohn beziehen. Der Vollzeitbeschäftigte zum Mindestlohn erzielt im Jahr 2026 einen Bruttomonatslohn von €2.409. In Steuerklasse I erhält er netto ca. €1.724 monatlich — entsprechend 71,6 % des Bruttolohns.\n\nDie Einfachheit ist beabsichtigt und ein Vorzug. Eine Steuer auf das Bruttoeinkommen unabhängig von dessen Herkunft beseitigt die Möglichkeit, die Bemessungsgrundlage durch anspruchsvolle Steuerplanungsinstrumente auszuhöhlen.\n\nEinkommen, das in einer früheren Phase bereits der Besteuerung unterlag, wird nicht erneut berücksichtigt. Damit wird eine effektive Doppelbesteuerung vermieden. Verpflegungszuschüsse und Fahrtkostenzuschüsse sind kein Lohn — sie sind Entschädigungen für Kosten, die dem Arbeitnehmer nicht entstehen würden, wenn er nicht verpflichtet wäre, zur Arbeit zu pendeln.`
+  },
+  {
+    id: 'pruefung',
+    tag: 'III. Kritische Prüfungspunkte',
+    text: `A. Die Steuer ignoriert die tatsächliche Leistungsfähigkeit?\nDas klassische Argument der Steuertheorie lautet, dass die Steuer auf die tatsächliche Zahlungsfähigkeit abstellen solle. Antwort: In Deutschland ist das Sozialversicherungssystem universell und vollständig obligatorisch. Ausgaben für Privatärzte und Privatschulbildung sind Konsumausgaben, freiwillig und außerhalb der Möglichkeiten von Mindestlohnempfängern.\n\nB. Was gilt als "Einkommen" im Sinne der ESFG?\nUnrealisierte Kapitalgewinne werden zu einem künftigen Zeitpunkt realisiert und besteuert. Sachbezüge sind ausgenommen, es sei denn, sie haben die Form von Immobilien oder Finanzanlagen.\n\nC. Ist der MRSM eine verkappte Pauschalsteuer?\nDie ESFG kann nicht regressiv sein, da sie eine Ergänzungssteuer ist, die nach der Einkommensteuer berechnet wird. Technische Anmerkung: GKA = 122,14 % des Bruttolohns; NER = 71,6 %; MRSM = ca. 41,4 %.\n\nD. Wechselwirkung mit Doppelbesteuerungsabkommen\nDer MRSM ist für alle gleich — ohne zusätzliche Progressivität, ohne Staffelung, ohne einzeln ausgehandelte Ausnahmen.\n\nE. Verfassungskonformität — Grundgesetz\nDie ESFG entspricht dem Gleichheitssatz (Art. 3), dem Sozialstaatsprinzip (Art. 20) und dem Leistungsfähigkeitsprinzip.`
+  },
+  {
+    id: 'vorschlag',
+    tag: 'IV. Öffentlicher Vorschlag',
+    text: `In Deutschland zahlen Vollzeitbeschäftigte zum Mindestlohn Pflichtbeiträge zur Krankenversicherung, Rentenversicherung, Arbeitslosenversicherung und Pflegeversicherung. Ihr Arbeitgeber zahlt in gleichem Umfang in ihrem Namen, zuzüglich der Unfallversicherung. Insgesamt gelangt mehr als ein Drittel dessen, was dieser Arbeitnehmer den Betrieb kostet, nie auf sein Bankkonto.\n\nEs gibt Menschen in Deutschland, die weit mehr als den Mindestlohn verdienen und dabei proportional weniger zahlen als dieser Arbeitnehmer. Nicht weil sie unehrlich wären. Sondern weil sie es sich leisten können, jemanden zu bezahlen, der weiß, wie das innerhalb der gesetzlichen Grenzen möglich ist.\n\nDieser Vorschlag bekämpft weder Reichtum noch Vermögen. Er stellt eine einfache Frage: Ist es gerecht, dass jemand, der mehr verdient, proportional weniger zahlt als jemand, der das gesetzliche Minimum verdient? Die Antwort lautet nein. Und dieser Vorschlag setzt dieses Nein in Recht um.\n\nJedes Jahr berechnet der Staat, was ein Vollzeitbeschäftigter zum Mindestlohn den Arbeitgeber kostet und wie viel von diesem Geld tatsächlich auf das Konto des Arbeitnehmers gelangt. Die Differenz in Prozent ist der MRSM. Er ist öffentlich, einfach und von jedermann nachprüfbar.\n\nWer proportional zu seinem gesamten Bruttoeinkommen mindestens diesen Prozentsatz an Steuern und Beiträgen zahlt, schuldet nichts Zusätzliches. Wer weniger zahlt, entrichtet die Differenz. Nichts weiter. Es gibt keine neuen Steuerklassen. Keine Ausnahmen nach Einkommensherkunft. Keine Umgehungsmöglichkeit über eine Gesellschaftsstruktur in Luxemburg oder Irland.`
+  },
+  {
+    id: 'diskussion',
+    tag: 'V. Öffentliche Diskussion — Doktrinärer Rahmen',
+    text: `1. Das Problem der formellen gegenüber der tatsächlichen Progressivität\nIn Deutschland legt das EStG ein progressives System mit einem Eingangssteuersatz von 14 % und einem Spitzensteuersatz von 45 % fest. In ihrer tatsächlichen Dimension wird die Progressivität jedoch durch das geltende System nicht garantiert.\n\n2. Die Bezugsgröße\nDer MRSM ist kein nomineller Steuersatz. Er ist eine reale wirtschaftliche Größe. Für Steuerklasse I 2026: GKA = 122,14 % des Bruttolohns; NER = 71,6 %; MRSM = 41,4 %.\n\n3. Bruttoeinkommen als Bemessungsgrundlage\nDie Bruttobasis ist per Definition resistent gegenüber Steuergestaltungen, die auf der Manipulierung der Bemessungsgrundlage beruhen.\n\n4. Vereinbarkeit mit dem Grundgesetz\nHinsichtlich des Leistungsfähigkeitsprinzips, des Gleichheitssatzes (Art. 3 GG) und des Sozialstaatsprinzips (Art. 20 GG) ist die ESFG verfassungskonform.`
+  },
+  {
+    id: 'offene_fragen',
+    tag: 'VI. Noch offene Fragen',
+    text: `1. Juristische Personen: Bevor die ESFG auf juristische Personen ausgedehnt werden könnte, wäre eine Bestandsaufnahme aller Steuern erforderlich — einschließlich Körperschaftsteuer, Gewerbesteuer und branchenspezifischer Abgaben.\n\n2. Steuerliche Absetzbarkeit des Erwerbs von Wohneigentum: Wie sind Einkommensteuerabzüge für Wohnbaukredit zu behandeln?\n\n3. Personenstand und Haushaltszusammensetzung: Steuerklasse I (ledig), II (Alleinerziehende), III/IV/V (Verheiratete). Die Frage der Abstimmung der ESFG mit diesen Differenzierungen bleibt offen.\n\n4. Gemischte Leistungen: Dienstfahrzeug, Unterkunft, Tankkarte, Diensttelefon — Gesamtwert oder nur privater Anteil?\n\n5. Private Krankenversicherung: Ab €77.400 Jahreseinkommen möglich. Nur der gesetzlich obligatorische Anteil fließt in die EStEI ein.\n\n6. Steuergesetzgebungskompetenz Bund versus Länder: Bundes-, Landes- oder Gemeinschaftsebene?`
+  },
+  {
+    id: 'gesetzesbegründung',
+    tag: 'VII. Gesetzesbegründung',
+    text: `Das Grundgesetz enthält keine explizite Steuerklausel. Die verfassungsrechtliche Grundlage stützt sich auf Artikel 3 (Gleichheitssatz), Artikel 20 (Sozialstaatsprinzip) und die Rechtsprechung des Bundesverfassungsgerichts zum Leistungsfähigkeitsprinzip.\n\nDas geltende System ermöglicht es trotz der formellen Progressivität der Einkommensteuer, dass Steuerpflichtige mit wesentlich höheren Einkünften als dem Mindestlohn eine proportional geringere EStEI tragen als der Mindestlohnbeschäftigte. Diese Situation ist unvereinbar mit dem Gleichheitssatz des Artikels 3, dem Sozialstaatsprinzip des Artikels 20 und dem Leistungsfähigkeitsprinzip.\n\nDie ESFG ist aus drei grundlegenden Gründen mit dem Grundgesetz vereinbar: Sie stärkt das Leistungsfähigkeitsprinzip, entspricht dem Gleichheitssatz und ist mit dem Sozialstaatsprinzip vereinbar. Die ESFG ist keine radikale Neuerung — sie ist die logische Konsequenz eines Systems, das Gleichheit proklamiert, diese aber in der Praxis nicht garantiert.`
+  },
+  {
+    id: 'artikeltext',
+    tag: 'VIII. Artikeltext',
+    text: `§ 1 — Gegenstand\nEs wird die Ergänzende Steuer für Fiskalische Gleichheit (ESFG) eingeführt mit dem Ziel sicherzustellen, dass kein Steuerpflichtiger eine proportional geringere EStEI trägt als der Arbeitnehmer, der ausschließlich den Mindestlohn in Vollzeit bezieht.\n\n§ 2 — Begriffsbestimmungen\na) GKA: Summe aller dem Arbeitgeber entstehenden Aufwendungen.\nb) NER: Betrag, der nach allen Pflichtabzügen auf das Bankkonto des Arbeitnehmers überwiesen wird.\nc) SBQ = (GKA − NER) ÷ GKA\nd) MRSM: die SBQ für den Mindestlohnbeschäftigten in Steuerklasse I, jährlich bis 31. Januar festgesetzt.\ne) EStEI: der Prozentsatz des Bruttoeinkommens, der tatsächlich als Steuern und Pflichtbeiträge entrichtet wird.\n\n§ 6 — Steuerberechnung\nESFG = (MRSM − EStEI) × Gesamtbruttoeinkommen\n\n§ 7 — Jährliche Festsetzung\nDie ESFG wird jährlich festgesetzt und bis zum letzten Werktag des Monats April des Folgejahres zusammen mit der Einkommensteuererklärung entrichtet.\n\n§ 12 — Inkrafttreten\nDieses Gesetz tritt im Steuerjahr in Kraft, das auf das Jahr seiner Verkündung im Bundesgesetzblatt folgt.\n\nBerlin, den ___ __________ 2026.`
+  }
+];
+
+let proposals = {};
+let voted = {};
+let selections = {};
+let showAll = {};
+sections.forEach(s => { proposals[s.id] = []; selections[s.id] = ''; showAll[s.id] = false; });
+
+function renderAll() {
+  const container = document.getElementById('all-sections');
+  container.innerHTML = sections.map(s => `
+    <div class="section-block">
+      <div class="section-top">
+        <div class="section-tag">${s.tag}</div>
+        <div class="section-text" id="text-${s.id}" onmouseup="captureSelection('${s.id}')" ontouchend="captureSelection('${s.id}')">${s.text.split('\n\n').map(p=>`<p>${p.replace(/\n/g,'<br>')}</p>`).join('')}</div>
+      </div>
+      <button class="propose-toggle" id="toggle-${s.id}" onclick="togglePanel('${s.id}')">
+        <span>Änderung zu diesem Abschnitt vorschlagen</span>
+        <i class="ti ti-chevron-down chevron"></i>
+      </button>
+      <div class="propose-panel" id="panel-${s.id}">
+        <div class="hint">Wähle den Text oben aus, den du ändern möchtest</div>
+        <div class="field-label">Ausgewählter Text</div>
+        <div class="selected-text-box" id="sel-${s.id}">Noch kein Text ausgewählt...</div>
+        <div class="correction-hint" id="hint-${s.id}">Falls du dich bei der Auswahl geirrt hast, wähle den Text oben erneut aus.</div>
+        <div class="field-label">Ersetzen durch (in deinen eigenen Worten)</div>
+        <textarea id="sub-${s.id}" placeholder="Schreibe hier deinen Vorschlag..."></textarea>
+        <button class="btn-submit" id="btn-${s.id}" onclick="submit('${s.id}')" disabled>Vorschlag einreichen</button>
+      </div>
+      <div class="votes-panel" id="votes-${s.id}" style="display:none;">
+        <div class="proposals-title">Vorgeschlagene Änderungen</div>
+        <div id="props-${s.id}"></div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function togglePanel(sectionId) {
+  const panel = document.getElementById('panel-' + sectionId);
+  const toggle = document.getElementById('toggle-' + sectionId);
+  panel.classList.toggle('open');
+  toggle.classList.toggle('open');
+}
+
+function captureSelection(sectionId) {
+  setTimeout(() => {
+    const sel = window.getSelection();
+    if (!sel || sel.rangeCount === 0) return;
+    const selectedText = sel.toString().trim();
+    if (selectedText.length < 5) return;
+    const textEl = document.getElementById('text-' + sectionId);
+    if (!textEl.contains(sel.anchorNode)) return;
+    selections[sectionId] = selectedText;
+    const panel = document.getElementById('panel-' + sectionId);
+    if (!panel.classList.contains('open')) togglePanel(sectionId);
+    const box = document.getElementById('sel-' + sectionId);
+    box.textContent = '"' + selectedText + '"';
+    box.classList.add('has-selection');
+    document.getElementById('hint-' + sectionId).classList.add('visible');
+    document.getElementById('btn-' + sectionId).disabled = false;
+  }, 10);
+}
+
+function submit(sectionId) {
+  const onde = selections[sectionId];
+  const sub = document.getElementById('sub-' + sectionId).value.trim();
+  if (!onde || !sub) return;
+  proposals[sectionId].unshift({ id: Date.now(), onde, sub, up: 0, down: 0 });
+  selections[sectionId] = '';
+  const box = document.getElementById('sel-' + sectionId);
+  box.textContent = 'Noch kein Text ausgewählt...';
+  box.classList.remove('has-selection');
+  document.getElementById('hint-' + sectionId).classList.remove('visible');
+  document.getElementById('sub-' + sectionId).value = '';
+  document.getElementById('btn-' + sectionId).disabled = true;
+  togglePanel(sectionId);
+  renderProposals(sectionId);
+}
+
+function vote(sectionId, propId, dir) {
+  const key = sectionId + '-' + propId;
+  if (voted[key]) return;
+  voted[key] = dir;
+  const p = proposals[sectionId].find(x => x.id === propId);
+  if (!p) return;
+  if (dir === 'up') p.up++; else p.down++;
+  renderProposals(sectionId);
+}
+
+function toggleShowAll(sectionId) {
+  showAll[sectionId] = !showAll[sectionId];
+  renderProposals(sectionId);
+}
+
+function renderProposals(sectionId) {
+  const area = document.getElementById('props-' + sectionId);
+  const vPanel = document.getElementById('votes-' + sectionId);
+  const list = proposals[sectionId];
+  if (list.length === 0) { vPanel.style.display = 'none'; return; }
+  vPanel.style.display = 'block';
+
+  const visible = showAll[sectionId] ? list : list.slice(0, VISIBLE_LIMIT);
+  const hidden = list.length - VISIBLE_LIMIT;
+
+  area.innerHTML = visible.map(p => {
+    const key = sectionId + '-' + p.id;
+    const v = voted[key];
+    return `
+    <div class="vote-card">
+      <div class="vc-original">"${p.onde}"</div>
+      <div class="vc-new">${p.sub}</div>
+      <div class="vote-row">
+        <button class="btn-vote ${v==='up'?'voted-up':''}" onclick="vote('${sectionId}',${p.id},'up')">
+          <i class="ti ti-thumb-up"></i> ${p.up}
+        </button>
+        <button class="btn-vote ${v==='down'?'voted-down':''}" onclick="vote('${sectionId}',${p.id},'down')">
+          <i class="ti ti-thumb-down"></i> ${p.down}
+        </button>
+      </div>
+    </div>`;
+  }).join('');
+
+  if (!showAll[sectionId] && hidden > 0) {
+    area.innerHTML += `<button class="btn-ver-mais" onclick="toggleShowAll('${sectionId}')">Weitere ${hidden} Vorschlag${hidden > 1 ? 'schläge' : ''} anzeigen</button>`;
+  } else if (showAll[sectionId] && list.length > VISIBLE_LIMIT) {
+    area.innerHTML += `<button class="btn-ver-mais" onclick="toggleShowAll('${sectionId}')">Weniger anzeigen</button>`;
+  }
+}
+
+function downloadFile() {
+  window.print();
+}
+
+renderAll();
+</script>
+</body>
+</html>

@@ -3,48 +3,323 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Lies, denk nach, gestalte mit — ESFG</title>
+<title>ESFG — Ergänzende Steuer für Fiskalische Gleichheit</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: system-ui, sans-serif; background: #fff; color: #111; max-width: 480px; margin: 0 auto; }
-.site-header { padding: 1rem 1.25rem 0.75rem; border-bottom: 1px solid #e5e5e5; position: sticky; top: 0; background: #fff; z-index: 10; }
-.site-header h1 { font-size: 16px; font-weight: 500; }
-.site-header p { font-size: 11px; color: #666; margin-top: 2px; }
-.section-block { border-bottom: 1px solid #e5e5e5; }
-.section-top { padding: 1.25rem 1.25rem 1rem; }
-.section-tag { font-size: 10px; font-weight: 500; color: #aaa; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px; }
-.section-text { font-size: 13px; line-height: 1.75; cursor: text; user-select: text; }
-.section-text p { margin-bottom: 0.5rem; }
+
+body {
+  font-family: system-ui, sans-serif;
+  background: #fff;
+  color: #111;
+}
+
+/* ── HEADER ── */
+.site-header {
+  padding: 1.25rem 1.5rem 1rem;
+  border-bottom: 1px solid #e5e5e5;
+  background: #fff;
+}
+.site-header h1 { font-size: 15px; font-weight: 500; }
+.site-header p { font-size: 11px; color: #666; margin-top: 3px; }
+
+/* ── SECTION BLOCK ── */
+.section-block {
+  border-bottom: 1px solid #e5e5e5;
+  display: flex;
+  flex-direction: row;
+  gap: 0;
+}
+
+.section-left {
+  flex: 1;
+  padding: 1.5rem;
+  border-right: 1px solid #e5e5e5;
+}
+
+.section-right {
+  width: 320px;
+  flex-shrink: 0;
+  padding: 1.5rem;
+  background: #f9f9f7;
+}
+
+.section-tag {
+  font-size: 11px;
+  font-weight: 500;
+  color: #aaa;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 10px;
+}
+
+.section-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: #111;
+  margin-bottom: 12px;
+}
+
+.section-text {
+  font-size: 13px;
+  line-height: 1.8;
+  color: #111;
+  user-select: text;
+}
+
+.section-text p { margin-bottom: 0.75rem; }
 .section-text p:last-child { margin-bottom: 0; }
-.propose-toggle { width: 100%; padding: 0.75rem 1.25rem; background: #f9f9f7; border: none; border-top: 1px solid #e5e5e5; font-size: 13px; color: #555; cursor: pointer; display: flex; align-items: center; justify-content: space-between; }
-.propose-toggle .chevron { font-size: 14px; transition: transform 0.2s; }
-.propose-toggle.open .chevron { transform: rotate(180deg); }
-.propose-panel { display: none; padding: 1rem 1.25rem; background: #f9f9f7; border-top: 1px solid #e5e5e5; }
-.propose-panel.open { display: block; }
-.hint { font-size: 11px; color: #aaa; margin-bottom: 0.6rem; font-style: italic; }
-.field-label { font-size: 11px; color: #aaa; margin-bottom: 3px; margin-top: 8px; }
-.selected-text-box { width: 100%; font-size: 12px; padding: 7px 9px; border-radius: 8px; border: 1px solid #e5e5e5; background: #fff; color: #aaa; min-height: 48px; font-family: inherit; line-height: 1.5; font-style: italic; }
-.selected-text-box.has-selection { color: #111; border-color: #bbb; font-style: normal; }
-.correction-hint { font-size: 11px; color: #c0392b; margin-top: 4px; display: none; }
-.correction-hint.visible { display: block; }
-textarea { width: 100%; font-size: 12px; padding: 7px 9px; border-radius: 8px; border: 1px solid #e5e5e5; background: #fff; color: #111; resize: vertical; min-height: 60px; font-family: inherit; line-height: 1.5; }
-.btn-submit { margin-top: 10px; width: 100%; background: #111; color: #fff; border: none; border-radius: 8px; padding: 10px 12px; font-size: 13px; cursor: pointer; }
+
+/* ── RIGHT PANEL ── */
+.field-label {
+  font-size: 11px;
+  color: #aaa;
+  margin-bottom: 4px;
+  margin-top: 12px;
+}
+.field-label:first-child { margin-top: 0; }
+
+.selected-text-box {
+  width: 100%;
+  font-size: 12px;
+  padding: 7px 9px;
+  border-radius: 8px;
+  border: 1px solid #e5e5e5;
+  background: #fff;
+  color: #aaa;
+  min-height: 48px;
+  font-family: inherit;
+  line-height: 1.5;
+  font-style: italic;
+}
+.selected-text-box.has-selection {
+  color: #111;
+  border-color: #bbb;
+  font-style: normal;
+}
+
+textarea {
+  width: 100%;
+  font-size: 12px;
+  padding: 7px 9px;
+  border-radius: 8px;
+  border: 1px solid #e5e5e5;
+  background: #fff;
+  color: #111;
+  resize: vertical;
+  min-height: 72px;
+  font-family: inherit;
+  line-height: 1.5;
+}
+
+.btn-submit {
+  margin-top: 10px;
+  width: 100%;
+  background: #111;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-size: 13px;
+  cursor: pointer;
+}
 .btn-submit:disabled { opacity: 0.35; cursor: default; }
-.votes-panel { padding: 0 1.25rem 1rem; background: #f9f9f7; }
-.proposals-title { font-size: 10px; font-weight: 500; color: #aaa; text-transform: uppercase; letter-spacing: 0.06em; padding-top: 0.75rem; margin-bottom: 0.5rem; }
-.vote-card { background: #fff; border: 1px solid #e5e5e5; border-radius: 8px; padding: 0.65rem; margin-bottom: 0.5rem; }
-.vc-original { font-size: 10px; color: #aaa; font-style: italic; margin-bottom: 4px; }
-.vc-new { font-size: 12px; line-height: 1.5; margin-bottom: 7px; }
-.vote-row { display: flex; gap: 6px; }
-.btn-vote { flex: 1; padding: 6px; border-radius: 8px; border: 1px solid #e5e5e5; background: transparent; cursor: pointer; font-size: 12px; display: flex; align-items: center; justify-content: center; gap: 4px; color: #666; }
-.btn-vote.voted-up { background: #EAF3DE; border-color: #639922; color: #3B6D11; pointer-events: none; }
-.btn-vote.voted-down { background: #FCEBEB; border-color: #E24B4A; color: #A32D2D; pointer-events: none; }
-.btn-ver-mais { width: 100%; padding: 8px; background: transparent; border: 1px solid #e5e5e5; border-radius: 8px; font-size: 12px; color: #666; cursor: pointer; margin-top: 4px; }
-.btn-ver-mais:hover { background: #fff; }
-.pdf-bar { padding: 1rem 1.25rem; border-top: 1px solid #e5e5e5; background: #fff; }
-.btn-pdf { width: 100%; background: #111; color: #fff; border: none; border-radius: 8px; padding: 12px; font-size: 14px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; }
+.btn-submit:not(:disabled):hover { background: #333; }
+
+.hint-text {
+  font-size: 11px;
+  color: #aaa;
+  font-style: italic;
+  margin-bottom: 8px;
+}
+
+/* ── SECTION III SEPARATOR ── */
+.pruefung-separator {
+  margin: 1.5rem 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.pruefung-separator span {
+  font-size: 10px;
+  font-weight: 500;
+  color: #aaa;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+}
+.pruefung-separator::before,
+.pruefung-separator::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: #e5e5e5;
+}
+
+/* ── OPEN QUESTION ── */
+.open-question {
+  margin-bottom: 1.25rem;
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid #e5e5e5;
+}
+.open-question:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+
+.open-question-label {
+  font-size: 10px;
+  font-weight: 500;
+  color: #c0392b;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 4px;
+}
+
+.open-question-text {
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.6;
+  color: #111;
+  margin-bottom: 4px;
+}
+
+.open-question-altered {
+  font-size: 11px;
+  color: #888;
+  font-style: italic;
+}
+
+/* right panel for open questions */
+.open-q-right {
+  border-top: 1px solid #e5e5e5;
+  padding-top: 1rem;
+  margin-top: 1rem;
+}
+.open-q-right:first-child { border-top: none; padding-top: 0; margin-top: 0; }
+
+/* ── ADD NEW QUESTION ── */
+.btn-add-question {
+  width: 100%;
+  margin-top: 1rem;
+  padding: 9px;
+  font-size: 12px;
+  background: transparent;
+  border: 1px dashed #ccc;
+  border-radius: 8px;
+  color: #888;
+  cursor: pointer;
+}
+.btn-add-question:hover { background: #fff; }
+
+/* ── DOWNLOAD BAR ── */
+.download-bar {
+  padding: 1.25rem 1.5rem;
+  border-top: 1px solid #e5e5e5;
+  background: #fff;
+}
+.btn-download {
+  width: 100%;
+  max-width: 480px;
+  background: #111;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 13px;
+  font-size: 14px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+.btn-download:hover { background: #333; }
+
 ::selection { background: #B5D4F4; color: #042C53; }
+
+/* ── MOBILE ── */
+@media (max-width: 700px) {
+  .section-block { flex-direction: column; }
+  .section-left { border-right: none; border-bottom: 1px solid #e5e5e5; padding: 1.25rem; }
+  .section-right { width: 100%; padding: 1.25rem; }
+}
+
+/* ── PRINT ── */
+@media print {
+  * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+
+  .site-header,
+  .section-right,
+  .download-bar,
+  .pruefung-separator,
+  .open-question-altered,
+  .btn-add-question { display: none !important; }
+
+  body { font-family: 'Times New Roman', Times, serif; font-size: 11pt; color: #000; background: #fff; }
+
+  .section-block {
+    display: block;
+    border: none;
+    margin-bottom: 1rem;
+    page-break-inside: avoid;
+  }
+
+  .section-left {
+    border: none;
+    padding: 0;
+    width: 100%;
+  }
+
+  .section-tag { display: none; }
+
+  .section-title {
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 11pt;
+    font-weight: bold;
+    margin-bottom: 6pt;
+  }
+
+  .section-text {
+    font-size: 11pt;
+    line-height: 1.5;
+  }
+
+  /* Page 1 header */
+  @page :first {
+    margin: 2cm 2.5cm 2.5cm 2.5cm;
+    @top-left { content: "Deutscher Bundestag"; font-family: Helvetica, Arial, sans-serif; font-size: 9pt; }
+    @top-right { content: "Drucksache ESFG/2026"; font-family: Helvetica, Arial, sans-serif; font-size: 9pt; }
+  }
+
+  /* Even pages */
+  @page :left {
+    margin: 2cm 2.5cm 2.5cm 2.5cm;
+    @top-left { content: "Drucksache ESFG/2026 – " counter(page) " – Deutscher Bundestag – 21. Wahlperiode"; font-family: Helvetica, Arial, sans-serif; font-size: 8pt; }
+  }
+
+  /* Odd pages (not first) */
+  @page :right {
+    margin: 2cm 2.5cm 2.5cm 2.5cm;
+    @top-right { content: "Deutscher Bundestag – 21. Wahlperiode – " counter(page) " – Drucksache ESFG/2026"; font-family: Helvetica, Arial, sans-serif; font-size: 8pt; }
+  }
+
+  .print-page1-header {
+    display: block !important;
+    font-family: Helvetica, Arial, sans-serif;
+    margin-bottom: 1.5rem;
+  }
+
+  .print-unanswered { page-break-before: always; }
+  .print-unanswered-warning {
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 9pt;
+    border: 1px solid #000;
+    padding: 8pt;
+    margin-bottom: 1rem;
+    font-style: italic;
+  }
+}
+
+/* hide print-only elements on screen */
+.print-page1-header { display: none; }
+.print-unanswered { display: none; }
 </style>
 </head>
 <body>
@@ -56,190 +331,463 @@ textarea { width: 100%; font-size: 12px; padding: 7px 9px; border-radius: 8px; b
 
 <div id="all-sections"></div>
 
-<div class="pdf-bar">
-  <button class="btn-pdf" onclick="downloadFile()">
+<div class="download-bar">
+  <button class="btn-download" onclick="triggerPrint()">
     <i class="ti ti-download"></i>
     Herunterladen mit Änderungen
   </button>
 </div>
 
 <script>
-const VISIBLE_LIMIT = 2;
+const STORAGE_KEY = 'esfg-de-v1';
+
+/* ── DATA ── */
+
+const answeredQuestions = [
+  {
+    letter: 'A',
+    question: 'Die Steuer auf das Bruttoeinkommen ignoriert die tatsächliche Leistungsfähigkeit?',
+    answer: 'Das klassische Argument der Steuertheorie lautet, dass die Steuer auf die tatsächliche Zahlungsfähigkeit abstellen solle. In Deutschland ist das Sozialversicherungssystem universell und vollständig obligatorisch. Ausgaben für Privatärzte und Privatschulbildung sind Konsumausgaben — freiwillig und außerhalb der Möglichkeiten von Mindestlohnempfängern.'
+  },
+  {
+    letter: 'B',
+    question: 'Was gilt als „Einkommen" im Sinne der ESFG?',
+    answer: 'Unrealisierte Kapitalgewinne werden zu einem künftigen Zeitpunkt realisiert und besteuert. Sachbezüge sind ausgenommen, es sei denn, sie haben die Form von Immobilien oder Finanzanlagen. Beherrschte Gesellschaften sind Steuerumgehung, die bereits durch §42 der Abgabenordnung verboten ist.'
+  },
+  {
+    letter: 'C',
+    question: 'Ist der MRSM eine verkappte Pauschalsteuer?',
+    answer: 'Die ESFG kann nicht regressiv sein, da es sich um eine Ergänzungssteuer handelt, die nach der Einkommensteuer berechnet wird. Das Ziel ist einfach: Der Vollzeitbeschäftigte zum Mindestlohn zahlt stets null; wer weniger verdient, ebenfalls. Diese Steuer zahlt nur, wer mehr verdient und dabei proportional weniger beiträgt. Technische Anmerkung: GKA = 122,14 % des Bruttolohns; NER = 71,6 %; MRSM = ca. 41,4 %.'
+  },
+  {
+    letter: 'D',
+    question: 'Wechselwirkung mit Doppelbesteuerungsabkommen?',
+    answer: 'Der MRSM ist für alle gleich — ohne zusätzliche Progressivität, ohne Staffelung, ohne einzeln ausgehandelte Ausnahmen. Die Einfachheit ist der Schutz vor Rechtsstreitigkeiten. Weshalb sollte ein US-amerikanischer oder luxemburgischer Immobilieneigentümer weniger Steuern zahlen als eine deutsche Reinigungskraft?'
+  },
+  {
+    letter: 'E',
+    question: 'Verfassungskonformität — Grundgesetz der Bundesrepublik Deutschland?',
+    answer: 'Die ESFG ist mit dem Grundgesetz vereinbar. Sie gewährleistet die tatsächliche Progressivität, nimmt Mindestlohnbeschäftigte vollständig aus und entspricht dem Gleichheitssatz (Art. 3), dem Sozialstaatsprinzip (Art. 20) und dem Leistungsfähigkeitsprinzip.'
+  }
+];
+
+const openQuestionsDefault = [
+  { id: 'oq1', text: 'Juristische Personen: Welche Steuern müssen erfasst werden — Körperschaftsteuer, Gewerbesteuer, branchenspezifische Abgaben — bevor die ESFG auf juristische Personen ausgedehnt werden kann?' },
+  { id: 'oq2', text: 'Steuerliche Absetzbarkeit des Erwerbs von Wohneigentum: Wie sind Einkommensteuerabzüge für Wohnbaukredite zu behandeln?' },
+  { id: 'oq3', text: 'Personenstand und Haushaltszusammensetzung: Wie wird die ESFG mit den Steuerklassen I (ledig), II (Alleinerziehende), III/IV/V (Verheiratete) abgestimmt?' },
+  { id: 'oq4', text: 'Gemischte Leistungen: Dienstfahrzeug, Unterkunft, Tankkarte, Diensttelefon — Gesamtwert oder nur privater Anteil?' },
+  { id: 'oq5', text: 'Private Krankenversicherung: Ab €77.400 Jahreseinkommen möglich. Fließt nur der gesetzlich obligatorische Anteil in die EStEI ein?' },
+  { id: 'oq6', text: 'Steuergesetzgebungskompetenz Bund versus Länder: Wird die ESFG auf Bundes-, Landes- oder Gemeinschaftsebene geregelt (Art. 105–107 GG)?' }
+];
 
 const sections = [
   {
     id: 'einleitung',
-    tag: 'I. Einleitung',
+    tag: 'I',
+    title: 'I. Einleitung',
     text: `Dies ist eine Steuer auf das Bruttogesamteinkommen. Die Einkommensquelle ist unerheblich, mit Ausnahme bereits versteuerter Ersparnisse. Es handelt sich nicht um eine Vermögenssteuer. Die Einfachheit ist beabsichtigt — sie dient genau dem Zweck, denjenigen entgegenzuwirken, die über ausreichende Mittel verfügen, um professionelle Buchhalter und Steuerberater zu beauftragen.\n\nDies erscheint mir ein Gebot elementarer Gerechtigkeit: Es ist kaum zu rechtfertigen, dass ein Arbeitnehmer, der den gesetzlichen Mindestlohn verdient, proportional mehr beitragen soll als jemand, der von Kapitalerträgen lebt. Verpflegungszuschüsse und Fahrtkostenzuschüsse sind von der Bemessungsgrundlage ausgenommen.`
   },
   {
     id: 'begruendung',
-    tag: 'II. Ethische und rechtliche Begründung',
-    text: `Das elementarste Gebot steuerlicher Gerechtigkeit verlangt, dass Besserverdienende proportional nicht weniger zahlen als diejenigen, die den gesetzlichen Mindestlohn beziehen. Der Vollzeitbeschäftigte zum Mindestlohn erzielt im Jahr 2026 einen Bruttomonatslohn von €2.409. In Steuerklasse I erhält er netto ca. €1.724 monatlich — entsprechend 71,6 % des Bruttolohns.\n\nDie Einfachheit ist beabsichtigt und ein Vorzug. Eine Steuer auf das Bruttoeinkommen unabhängig von dessen Herkunft beseitigt die Möglichkeit, die Bemessungsgrundlage durch anspruchsvolle Steuerplanungsinstrumente auszuhöhlen.\n\nEinkommen, das in einer früheren Phase bereits der Besteuerung unterlag, wird nicht erneut berücksichtigt. Damit wird eine effektive Doppelbesteuerung vermieden. Verpflegungszuschüsse und Fahrtkostenzuschüsse sind kein Lohn — sie sind Entschädigungen für Kosten, die dem Arbeitnehmer nicht entstehen würden, wenn er nicht verpflichtet wäre, zur Arbeit zu pendeln.`
-  },
-  {
-    id: 'pruefung',
-    tag: 'III. Kritische Prüfungspunkte',
-    text: `A. Die Steuer ignoriert die tatsächliche Leistungsfähigkeit?\nDas klassische Argument der Steuertheorie lautet, dass die Steuer auf die tatsächliche Zahlungsfähigkeit abstellen solle. Antwort: In Deutschland ist das Sozialversicherungssystem universell und vollständig obligatorisch. Ausgaben für Privatärzte und Privatschulbildung sind Konsumausgaben, freiwillig und außerhalb der Möglichkeiten von Mindestlohnempfängern.\n\nB. Was gilt als "Einkommen" im Sinne der ESFG?\nUnrealisierte Kapitalgewinne werden zu einem künftigen Zeitpunkt realisiert und besteuert. Sachbezüge sind ausgenommen, es sei denn, sie haben die Form von Immobilien oder Finanzanlagen.\n\nC. Ist der MRSM eine verkappte Pauschalsteuer?\nDie ESFG kann nicht regressiv sein, da sie eine Ergänzungssteuer ist, die nach der Einkommensteuer berechnet wird. Technische Anmerkung: GKA = 122,14 % des Bruttolohns; NER = 71,6 %; MRSM = ca. 41,4 %.\n\nD. Wechselwirkung mit Doppelbesteuerungsabkommen\nDer MRSM ist für alle gleich — ohne zusätzliche Progressivität, ohne Staffelung, ohne einzeln ausgehandelte Ausnahmen.\n\nE. Verfassungskonformität — Grundgesetz\nDie ESFG entspricht dem Gleichheitssatz (Art. 3), dem Sozialstaatsprinzip (Art. 20) und dem Leistungsfähigkeitsprinzip.`
+    tag: 'II',
+    title: 'II. Ethische und rechtliche Begründung',
+    text: `1. Grundsatz der horizontalen Mindestgerechtigkeit\nDas elementarste Gebot steuerlicher Gerechtigkeit verlangt, dass Besserverdienende proportional nicht weniger zahlen als diejenigen, die den gesetzlichen Mindestlohn beziehen. Der Vollzeitbeschäftigte zum Mindestlohn erzielt im Jahr 2026 einen Bruttomonatslohn von €2.409. In Steuerklasse I erhält er netto ca. €1.724 monatlich — entsprechend 71,6 % des Bruttolohns.\n\n2. Steuer auf das Bruttoeinkommen — Einfachheit als Prinzip\nDie Einfachheit ist beabsichtigt und ein Vorzug. Eine Steuer auf das Bruttoeinkommen unabhängig von dessen Herkunft beseitigt die Möglichkeit, die Bemessungsgrundlage durch anspruchsvolle Steuerplanungsinstrumente auszuhöhlen.\n\n3. Ausnahme für bereits versteuerte Ersparnisse\nEinkommen, das in einer früheren Phase bereits der Besteuerung unterlag, wird nicht erneut berücksichtigt. Damit wird eine effektive Doppelbesteuerung vermieden.\n\n4. Ausnahme für Verpflegungszuschüsse und Fahrtkostenzuschüsse\nDiese Zuschüsse sind kein Lohn — sie sind Entschädigungen für Kosten, die dem Arbeitnehmer nicht entstehen würden, wenn er nicht verpflichtet wäre, zur Arbeit zu pendeln.`
   },
   {
     id: 'vorschlag',
-    tag: 'IV. Öffentlicher Vorschlag',
+    tag: 'IV',
+    title: 'IV. Öffentlicher Vorschlag',
     text: `In Deutschland zahlen Vollzeitbeschäftigte zum Mindestlohn Pflichtbeiträge zur Krankenversicherung, Rentenversicherung, Arbeitslosenversicherung und Pflegeversicherung. Ihr Arbeitgeber zahlt in gleichem Umfang in ihrem Namen, zuzüglich der Unfallversicherung. Insgesamt gelangt mehr als ein Drittel dessen, was dieser Arbeitnehmer den Betrieb kostet, nie auf sein Bankkonto.\n\nEs gibt Menschen in Deutschland, die weit mehr als den Mindestlohn verdienen und dabei proportional weniger zahlen als dieser Arbeitnehmer. Nicht weil sie unehrlich wären. Sondern weil sie es sich leisten können, jemanden zu bezahlen, der weiß, wie das innerhalb der gesetzlichen Grenzen möglich ist.\n\nDieser Vorschlag bekämpft weder Reichtum noch Vermögen. Er stellt eine einfache Frage: Ist es gerecht, dass jemand, der mehr verdient, proportional weniger zahlt als jemand, der das gesetzliche Minimum verdient? Die Antwort lautet nein. Und dieser Vorschlag setzt dieses Nein in Recht um.\n\nJedes Jahr berechnet der Staat, was ein Vollzeitbeschäftigter zum Mindestlohn den Arbeitgeber kostet und wie viel von diesem Geld tatsächlich auf das Konto des Arbeitnehmers gelangt. Die Differenz in Prozent ist der MRSM. Er ist öffentlich, einfach und von jedermann nachprüfbar.\n\nWer proportional zu seinem gesamten Bruttoeinkommen mindestens diesen Prozentsatz an Steuern und Beiträgen zahlt, schuldet nichts Zusätzliches. Wer weniger zahlt, entrichtet die Differenz. Nichts weiter. Es gibt keine neuen Steuerklassen. Keine Ausnahmen nach Einkommensherkunft. Keine Umgehungsmöglichkeit über eine Gesellschaftsstruktur in Luxemburg oder Irland.`
   },
   {
     id: 'diskussion',
-    tag: 'V. Öffentliche Diskussion — Doktrinärer Rahmen',
+    tag: 'V',
+    title: 'V. Öffentliche Diskussion — Doktrinärer Rahmen',
     text: `1. Das Problem der formellen gegenüber der tatsächlichen Progressivität\nIn Deutschland legt das EStG ein progressives System mit einem Eingangssteuersatz von 14 % und einem Spitzensteuersatz von 45 % fest. In ihrer tatsächlichen Dimension wird die Progressivität jedoch durch das geltende System nicht garantiert.\n\n2. Die Bezugsgröße\nDer MRSM ist kein nomineller Steuersatz. Er ist eine reale wirtschaftliche Größe. Für Steuerklasse I 2026: GKA = 122,14 % des Bruttolohns; NER = 71,6 %; MRSM = 41,4 %.\n\n3. Bruttoeinkommen als Bemessungsgrundlage\nDie Bruttobasis ist per Definition resistent gegenüber Steuergestaltungen, die auf der Manipulierung der Bemessungsgrundlage beruhen.\n\n4. Vereinbarkeit mit dem Grundgesetz\nHinsichtlich des Leistungsfähigkeitsprinzips, des Gleichheitssatzes (Art. 3 GG) und des Sozialstaatsprinzips (Art. 20 GG) ist die ESFG verfassungskonform.`
   },
   {
-    id: 'offene_fragen',
-    tag: 'VI. Noch offene Fragen',
-    text: `1. Juristische Personen: Bevor die ESFG auf juristische Personen ausgedehnt werden könnte, wäre eine Bestandsaufnahme aller Steuern erforderlich — einschließlich Körperschaftsteuer, Gewerbesteuer und branchenspezifischer Abgaben.\n\n2. Steuerliche Absetzbarkeit des Erwerbs von Wohneigentum: Wie sind Einkommensteuerabzüge für Wohnbaukredit zu behandeln?\n\n3. Personenstand und Haushaltszusammensetzung: Steuerklasse I (ledig), II (Alleinerziehende), III/IV/V (Verheiratete). Die Frage der Abstimmung der ESFG mit diesen Differenzierungen bleibt offen.\n\n4. Gemischte Leistungen: Dienstfahrzeug, Unterkunft, Tankkarte, Diensttelefon — Gesamtwert oder nur privater Anteil?\n\n5. Private Krankenversicherung: Ab €77.400 Jahreseinkommen möglich. Nur der gesetzlich obligatorische Anteil fließt in die EStEI ein.\n\n6. Steuergesetzgebungskompetenz Bund versus Länder: Bundes-, Landes- oder Gemeinschaftsebene?`
-  },
-  {
     id: 'gesetzesbegründung',
-    tag: 'VII. Gesetzesbegründung',
-    text: `Das Grundgesetz enthält keine explizite Steuerklausel. Die verfassungsrechtliche Grundlage stützt sich auf Artikel 3 (Gleichheitssatz), Artikel 20 (Sozialstaatsprinzip) und die Rechtsprechung des Bundesverfassungsgerichts zum Leistungsfähigkeitsprinzip.\n\nDas geltende System ermöglicht es trotz der formellen Progressivität der Einkommensteuer, dass Steuerpflichtige mit wesentlich höheren Einkünften als dem Mindestlohn eine proportional geringere EStEI tragen als der Mindestlohnbeschäftigte. Diese Situation ist unvereinbar mit dem Gleichheitssatz des Artikels 3, dem Sozialstaatsprinzip des Artikels 20 und dem Leistungsfähigkeitsprinzip.\n\nDie ESFG ist aus drei grundlegenden Gründen mit dem Grundgesetz vereinbar: Sie stärkt das Leistungsfähigkeitsprinzip, entspricht dem Gleichheitssatz und ist mit dem Sozialstaatsprinzip vereinbar. Die ESFG ist keine radikale Neuerung — sie ist die logische Konsequenz eines Systems, das Gleichheit proklamiert, diese aber in der Praxis nicht garantiert.`
+    tag: 'VI',
+    title: 'VI. Gesetzesbegründung',
+    text: `Das Grundgesetz enthält keine explizite Steuerklausel. Die verfassungsrechtliche Grundlage stützt sich auf Artikel 3 (Gleichheitssatz), Artikel 20 (Sozialstaatsprinzip) und die Rechtsprechung des Bundesverfassungsgerichts zum Leistungsfähigkeitsprinzip.\n\nDie ESFG ist aus drei grundlegenden Gründen mit dem Grundgesetz vereinbar: Sie stärkt das Leistungsfähigkeitsprinzip, entspricht dem Gleichheitssatz und ist mit dem Sozialstaatsprinzip vereinbar. Die ESFG ist keine radikale Neuerung — sie ist die logische Konsequenz eines Systems, das Gleichheit proklamiert, diese aber in der Praxis nicht garantiert.`
   },
   {
     id: 'artikeltext',
-    tag: 'VIII. Artikeltext',
-    text: `§ 1 — Gegenstand\nEs wird die Ergänzende Steuer für Fiskalische Gleichheit (ESFG) eingeführt mit dem Ziel sicherzustellen, dass kein Steuerpflichtiger eine proportional geringere EStEI trägt als der Arbeitnehmer, der ausschließlich den Mindestlohn in Vollzeit bezieht.\n\n§ 2 — Begriffsbestimmungen\na) GKA: Summe aller dem Arbeitgeber entstehenden Aufwendungen.\nb) NER: Betrag, der nach allen Pflichtabzügen auf das Bankkonto des Arbeitnehmers überwiesen wird.\nc) SBQ = (GKA − NER) ÷ GKA\nd) MRSM: die SBQ für den Mindestlohnbeschäftigten in Steuerklasse I, jährlich bis 31. Januar festgesetzt.\ne) EStEI: der Prozentsatz des Bruttoeinkommens, der tatsächlich als Steuern und Pflichtbeiträge entrichtet wird.\n\n§ 6 — Steuerberechnung\nESFG = (MRSM − EStEI) × Gesamtbruttoeinkommen\n\n§ 7 — Jährliche Festsetzung\nDie ESFG wird jährlich festgesetzt und bis zum letzten Werktag des Monats April des Folgejahres zusammen mit der Einkommensteuererklärung entrichtet.\n\n§ 12 — Inkrafttreten\nDieses Gesetz tritt im Steuerjahr in Kraft, das auf das Jahr seiner Verkündung im Bundesgesetzblatt folgt.\n\nBerlin, den ___ __________ 2026.`
+    tag: 'VII',
+    title: 'VII. Artikeltext',
+    text: `§ 1 — Gegenstand\nEs wird die Ergänzende Steuer für Fiskalische Gleichheit (ESFG) eingeführt mit dem Ziel sicherzustellen, dass kein Steuerpflichtiger eine proportional geringere EStEI trägt als der Arbeitnehmer, der ausschließlich den Mindestlohn in Vollzeit bezieht.\n\n§ 2 — Begriffsbestimmungen\na) GKA: Summe aller dem Arbeitgeber entstehenden Aufwendungen.\nb) NER: Betrag, der nach allen Pflichtabzügen auf das Bankkonto des Arbeitnehmers überwiesen wird.\nc) SBQ = (GKA − NER) ÷ GKA\nd) MRSM: die SBQ für den Mindestlohnbeschäftigten in Steuerklasse I, jährlich bis 31. Januar festgesetzt.\ne) EStEI: der Prozentsatz des Bruttoeinkommens, der tatsächlich als Steuern und Pflichtbeiträge entrichtet wird.\n\n§ 6 — Steuerberechnung\nESFG = (MRSM − EStEI) × Gesamtbruttoeinkommen\n\n§ 7 — Jährliche Festsetzung\nDie ESFG wird jährlich festgesetzt und bis zum letzten Werktag des Monats April des Folgejahres zusammen mit der Einkommensteuererklärung entrichtet.\n\n§ 12 — Inkrafttreten\nDieses Gesetz tritt im Steuerjahr in Kraft, das auf das Jahr seiner Verkündung im Bundesgesetzblatt folgt.\n\nBerlin, den ___ __________ 2026.\n\n_________________________\nDer Antragsteller\n\n_________________________\nVertretungsausschuss`
   }
 ];
 
-let proposals = {};
-let voted = {};
-let selections = {};
-let showAll = {};
-sections.forEach(s => { proposals[s.id] = []; selections[s.id] = ''; showAll[s.id] = false; });
-
-function renderAll() {
-  const container = document.getElementById('all-sections');
-  container.innerHTML = sections.map(s => `
-    <div class="section-block">
-      <div class="section-top">
-        <div class="section-tag">${s.tag}</div>
-        <div class="section-text" id="text-${s.id}" onmouseup="captureSelection('${s.id}')" ontouchend="captureSelection('${s.id}')">${s.text.split('\n\n').map(p=>`<p>${p.replace(/\n/g,'<br>')}</p>`).join('')}</div>
-      </div>
-      <button class="propose-toggle" id="toggle-${s.id}" onclick="togglePanel('${s.id}')">
-        <span>Änderung zu diesem Abschnitt vorschlagen</span>
-        <i class="ti ti-chevron-down chevron"></i>
-      </button>
-      <div class="propose-panel" id="panel-${s.id}">
-        <div class="hint">Wähle den Text oben aus, den du ändern möchtest</div>
-        <div class="field-label">Ausgewählter Text</div>
-        <div class="selected-text-box" id="sel-${s.id}">Noch kein Text ausgewählt...</div>
-        <div class="correction-hint" id="hint-${s.id}">Falls du dich bei der Auswahl geirrt hast, wähle den Text oben erneut aus.</div>
-        <div class="field-label">Ersetzen durch (in deinen eigenen Worten)</div>
-        <textarea id="sub-${s.id}" placeholder="Schreibe hier deinen Vorschlag..."></textarea>
-        <button class="btn-submit" id="btn-${s.id}" onclick="submit('${s.id}')" disabled>Vorschlag einreichen</button>
-      </div>
-      <div class="votes-panel" id="votes-${s.id}" style="display:none;">
-        <div class="proposals-title">Vorgeschlagene Änderungen</div>
-        <div id="props-${s.id}"></div>
-      </div>
-    </div>
-  `).join('');
+/* ── STATE ── */
+function loadState() {
+  try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; } catch(e) { return {}; }
+}
+function saveState(state) {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
 }
 
-function togglePanel(sectionId) {
-  const panel = document.getElementById('panel-' + sectionId);
-  const toggle = document.getElementById('toggle-' + sectionId);
-  panel.classList.toggle('open');
-  toggle.classList.toggle('open');
+let state = loadState();
+if (!state.edits) state.edits = {};
+if (!state.openQuestions) state.openQuestions = openQuestionsDefault.map(q => ({ ...q, altered: false, alteredText: null }));
+if (!state.answeredFromOpen) state.answeredFromOpen = [];
+if (!state.newQuestions) state.newQuestions = [];
+
+/* ── HELPERS ── */
+function textToHtml(text) {
+  return text.split('\n\n').map(p => `<p>${p.replace(/\n/g, '<br>')}</p>`).join('');
+}
+
+function getEffectiveText(sectionId, originalText) {
+  return (state.edits[sectionId] && state.edits[sectionId].replacement) ? state.edits[sectionId].replacement : originalText;
+}
+
+function nextLetter() {
+  const base = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  const used = answeredQuestions.length + state.answeredFromOpen.length;
+  return base[used] || '?';
+}
+
+/* ── RENDER REGULAR SECTION ── */
+function renderRegularSection(s) {
+  return `
+    <div class="section-block" id="block-${s.id}">
+      <div class="section-left">
+        <div class="section-tag">${s.tag}</div>
+        <div class="section-title">${s.title}</div>
+        <div class="section-text" id="text-${s.id}">${textToHtml(s.text)}</div>
+      </div>
+      <div class="section-right">
+        <div class="hint-text">Wähle den Text links aus, den du ändern möchtest</div>
+        <div class="field-label">Ausgewählter Text</div>
+        <div class="selected-text-box" id="sel-${s.id}">Noch kein Text ausgewählt...</div>
+        <div class="field-label">Ersetzen durch (in deinen eigenen Worten)</div>
+        <textarea id="sub-${s.id}" placeholder="Schreibe hier deinen Vorschlag..."></textarea>
+        <button class="btn-submit" id="btn-${s.id}" onclick="submitEdit('${s.id}')" disabled>Vorschlag einreichen</button>
+      </div>
+    </div>`;
+}
+
+/* ── RENDER SECTION III ── */
+function renderSection3() {
+  const allAnswered = [
+    ...answeredQuestions,
+    ...state.answeredFromOpen
+  ];
+
+  const answeredHtml = allAnswered.map(q => `
+    <div class="open-question" id="aq-${q.letter}">
+      <div class="open-question-label">${q.letter}.</div>
+      <div class="open-question-text" id="aq-text-${q.letter}">${q.question}</div>
+      <div class="section-text" style="margin-top:6px;" id="aq-ans-${q.letter}">${q.answer}</div>
+    </div>`).join('');
+
+  const openHtml = state.openQuestions.map((q, i) => {
+    const displayText = q.alteredText || q.text;
+    return `
+      <div class="open-question" id="oq-block-${q.id}">
+        <div class="open-question-label" style="color:#c0392b;">Offene Frage</div>
+        <div class="open-question-text">${displayText}</div>
+        ${q.altered ? `<div class="open-question-altered">Text wurde geändert</div>` : ''}
+      </div>`;
+  }).join('');
+
+  const newQHtml = state.newQuestions.map((q, i) => {
+    const displayText = q.alteredText || q.text;
+    return `
+      <div class="open-question" id="nq-block-${q.id}">
+        <div class="open-question-label" style="color:#c0392b;">Neue offene Frage</div>
+        <div class="open-question-text">${displayText}</div>
+        ${q.altered ? `<div class="open-question-altered">Text wurde geändert</div>` : ''}
+      </div>`;
+  }).join('');
+
+  const allOpenDone = state.openQuestions.every(q => q.altered) && state.newQuestions.every(q => q.altered);
+  const addNewBtn = allOpenDone ? `<button class="btn-add-question" onclick="showAddNewQuestion()">+ Neue Frage hinzufügen</button>` : '';
+
+  /* right panel */
+  const allOpenQ = [...state.openQuestions, ...state.newQuestions];
+  const rightPanelAnswered = allAnswered.map(q => `
+    <div class="open-q-right">
+      <div class="field-label" style="font-weight:500; color:#555;">${q.letter}. ${q.question}</div>
+      <div class="field-label">Text ändern — Ausgewählter Text</div>
+      <div class="selected-text-box" id="sel-aq-${q.letter}">Noch kein Text ausgewählt...</div>
+      <div class="field-label">Ersetzen durch</div>
+      <textarea id="sub-aq-${q.letter}" placeholder="Dein Vorschlag..."></textarea>
+      <button class="btn-submit" id="btn-aq-${q.letter}" onclick="submitAnsweredEdit('${q.letter}')" disabled>Einreichen</button>
+    </div>`).join('');
+
+  const rightPanelOpen = allOpenQ.map((q, i) => `
+    <div class="open-q-right">
+      <div class="field-label" style="font-weight:500; color:#c0392b;">Offene Frage: ${(q.alteredText || q.text).substring(0, 60)}...</div>
+      <div class="field-label">Frage umformulieren</div>
+      <textarea id="rewrite-${q.id}" placeholder="Formuliere die Frage neu...">${q.alteredText || q.text}</textarea>
+      <div class="field-label">Frage beantworten</div>
+      <textarea id="answer-${q.id}" placeholder="Schreibe hier deine Antwort..."></textarea>
+      <button class="btn-submit" onclick="submitOpenQuestion('${q.id}')">Einreichen</button>
+    </div>`).join('');
+
+  const addNewRightPanel = allOpenDone ? `
+    <div class="open-q-right" id="new-q-panel" style="display:none;">
+      <div class="field-label">Neue Frage</div>
+      <textarea id="new-q-text" placeholder="Schreibe deine Frage..."></textarea>
+      <button class="btn-submit" onclick="submitNewQuestion()">Frage hinzufügen</button>
+    </div>` : '';
+
+  return `
+    <div class="section-block" id="block-pruefung">
+      <div class="section-left">
+        <div class="section-tag">III</div>
+        <div class="section-title">III. Kritische Prüfungspunkte</div>
+        ${answeredHtml}
+
+        <div class="pruefung-separator">
+          <span>Noch offene Fragen</span>
+        </div>
+
+        ${openHtml}
+        ${newQHtml}
+        ${addNewBtn}
+      </div>
+      <div class="section-right">
+        ${rightPanelAnswered}
+        ${rightPanelOpen}
+        ${addNewRightPanel}
+      </div>
+    </div>`;
+}
+
+/* ── RENDER ALL ── */
+function renderAll() {
+  const container = document.getElementById('all-sections');
+  let html = '';
+
+  sections.forEach((s, i) => {
+    if (i === 2) html += renderSection3(); // insert III before IV
+    html += renderRegularSection(s);
+  });
+
+  // If section III not inserted yet (e.g. only 2 regular sections), append
+  if (sections.length <= 2) html += renderSection3();
+
+  container.innerHTML = html;
+  bindSelectionEvents();
+}
+
+/* ── SELECTION EVENTS ── */
+function bindSelectionEvents() {
+  sections.forEach(s => {
+    const el = document.getElementById('text-' + s.id);
+    if (!el) return;
+    el.addEventListener('mouseup', () => captureSelection(s.id));
+    el.addEventListener('touchend', () => setTimeout(() => captureSelection(s.id), 100));
+  });
+
+  // Answered questions in section III
+  const allAnswered = [...answeredQuestions, ...state.answeredFromOpen];
+  allAnswered.forEach(q => {
+    const textEl = document.getElementById('aq-text-' + q.letter);
+    const ansEl = document.getElementById('aq-ans-' + q.letter);
+    [textEl, ansEl].forEach(el => {
+      if (!el) return;
+      el.addEventListener('mouseup', () => captureAnsweredSelection(q.letter));
+    });
+  });
+
+  document.addEventListener('selectionchange', () => {
+    sections.forEach(s => {
+      const el = document.getElementById('text-' + s.id);
+      if (!el) return;
+      const sel = window.getSelection();
+      if (!sel || sel.rangeCount === 0) return;
+      const node = sel.anchorNode || sel.focusNode;
+      if (!node || !el.contains(node)) return;
+      const text = sel.toString().trim();
+      if (text.length < 5) return;
+      const box = document.getElementById('sel-' + s.id);
+      if (box) { box.textContent = '"' + text + '"'; box.classList.add('has-selection'); box.dataset.sel = text; }
+      const btn = document.getElementById('btn-' + s.id);
+      if (btn) btn.disabled = false;
+    });
+  });
 }
 
 function captureSelection(sectionId) {
   setTimeout(() => {
     const sel = window.getSelection();
     if (!sel || sel.rangeCount === 0) return;
-    const selectedText = sel.toString().trim();
-    if (selectedText.length < 5) return;
-    const textEl = document.getElementById('text-' + sectionId);
-    if (!textEl.contains(sel.anchorNode)) return;
-    selections[sectionId] = selectedText;
-    const panel = document.getElementById('panel-' + sectionId);
-    if (!panel.classList.contains('open')) togglePanel(sectionId);
+    const text = sel.toString().trim();
+    if (text.length < 5) return;
+    const el = document.getElementById('text-' + sectionId);
+    if (!el || !el.contains(sel.anchorNode)) return;
     const box = document.getElementById('sel-' + sectionId);
-    box.textContent = '"' + selectedText + '"';
-    box.classList.add('has-selection');
-    document.getElementById('hint-' + sectionId).classList.add('visible');
-    document.getElementById('btn-' + sectionId).disabled = false;
+    if (box) { box.textContent = '"' + text + '"'; box.classList.add('has-selection'); box.dataset.sel = text; }
+    const btn = document.getElementById('btn-' + sectionId);
+    if (btn) btn.disabled = false;
   }, 10);
 }
 
-function submit(sectionId) {
-  const onde = selections[sectionId];
+function captureAnsweredSelection(letter) {
+  setTimeout(() => {
+    const sel = window.getSelection();
+    if (!sel || sel.rangeCount === 0) return;
+    const text = sel.toString().trim();
+    if (text.length < 5) return;
+    const box = document.getElementById('sel-aq-' + letter);
+    if (box) { box.textContent = '"' + text + '"'; box.classList.add('has-selection'); box.dataset.sel = text; }
+    const btn = document.getElementById('btn-aq-' + letter);
+    if (btn) btn.disabled = false;
+  }, 10);
+}
+
+/* ── SUBMIT REGULAR EDIT ── */
+function submitEdit(sectionId) {
   const sub = document.getElementById('sub-' + sectionId).value.trim();
-  if (!onde || !sub) return;
-  proposals[sectionId].unshift({ id: Date.now(), onde, sub, up: 0, down: 0 });
-  selections[sectionId] = '';
+  if (!sub) return;
+  const s = sections.find(x => x.id === sectionId);
+  if (!s) return;
+  const original = (state.edits[sectionId] && state.edits[sectionId].replacement) ? state.edits[sectionId].replacement : s.text;
   const box = document.getElementById('sel-' + sectionId);
-  box.textContent = 'Noch kein Text ausgewählt...';
-  box.classList.remove('has-selection');
-  document.getElementById('hint-' + sectionId).classList.remove('visible');
-  document.getElementById('sub-' + sectionId).value = '';
-  document.getElementById('btn-' + sectionId).disabled = true;
-  togglePanel(sectionId);
-  renderProposals(sectionId);
+  const selected = box ? box.dataset.sel : null;
+  let newText = original;
+  if (selected) newText = original.replace(selected, sub);
+  else newText = sub;
+  state.edits[sectionId] = { replacement: newText };
+  saveState(state);
+  // reset UI
+  if (box) { box.textContent = 'Noch kein Text ausgewählt...'; box.classList.remove('has-selection'); delete box.dataset.sel; }
+  const ta = document.getElementById('sub-' + sectionId);
+  if (ta) ta.value = '';
+  const btn = document.getElementById('btn-' + sectionId);
+  if (btn) btn.disabled = true;
 }
 
-function vote(sectionId, propId, dir) {
-  const key = sectionId + '-' + propId;
-  if (voted[key]) return;
-  voted[key] = dir;
-  const p = proposals[sectionId].find(x => x.id === propId);
-  if (!p) return;
-  if (dir === 'up') p.up++; else p.down++;
-  renderProposals(sectionId);
+/* ── SUBMIT ANSWERED Q EDIT ── */
+function submitAnsweredEdit(letter) {
+  const sub = document.getElementById('sub-aq-' + letter).value.trim();
+  if (!sub) return;
+  const key = 'aq-edit-' + letter;
+  const allAnswered = [...answeredQuestions, ...state.answeredFromOpen];
+  const q = allAnswered.find(x => x.letter === letter);
+  if (!q) return;
+  const box = document.getElementById('sel-aq-' + letter);
+  const selected = box ? box.dataset.sel : null;
+  const original = state.edits[key] ? state.edits[key].replacement : (q.answer || q.question);
+  let newText = original;
+  if (selected) newText = original.replace(selected, sub);
+  else newText = sub;
+  state.edits[key] = { replacement: newText };
+  saveState(state);
+  if (box) { box.textContent = 'Noch kein Text ausgewählt...'; box.classList.remove('has-selection'); delete box.dataset.sel; }
+  const ta = document.getElementById('sub-aq-' + letter);
+  if (ta) ta.value = '';
+  const btn = document.getElementById('btn-aq-' + letter);
+  if (btn) btn.disabled = true;
 }
 
-function toggleShowAll(sectionId) {
-  showAll[sectionId] = !showAll[sectionId];
-  renderProposals(sectionId);
-}
+/* ── SUBMIT OPEN QUESTION ── */
+function submitOpenQuestion(qid) {
+  const rewriteEl = document.getElementById('rewrite-' + qid);
+  const answerEl = document.getElementById('answer-' + qid);
+  const rewrite = rewriteEl ? rewriteEl.value.trim() : '';
+  const answer = answerEl ? answerEl.value.trim() : '';
 
-function renderProposals(sectionId) {
-  const area = document.getElementById('props-' + sectionId);
-  const vPanel = document.getElementById('votes-' + sectionId);
-  const list = proposals[sectionId];
-  if (list.length === 0) { vPanel.style.display = 'none'; return; }
-  vPanel.style.display = 'block';
+  // find in openQuestions or newQuestions
+  let q = state.openQuestions.find(x => x.id === qid);
+  let isNew = false;
+  if (!q) { q = state.newQuestions.find(x => x.id === qid); isNew = true; }
+  if (!q) return;
 
-  const visible = showAll[sectionId] ? list : list.slice(0, VISIBLE_LIMIT);
-  const hidden = list.length - VISIBLE_LIMIT;
-
-  area.innerHTML = visible.map(p => {
-    const key = sectionId + '-' + p.id;
-    const v = voted[key];
-    return `
-    <div class="vote-card">
-      <div class="vc-original">"${p.onde}"</div>
-      <div class="vc-new">${p.sub}</div>
-      <div class="vote-row">
-        <button class="btn-vote ${v==='up'?'voted-up':''}" onclick="vote('${sectionId}',${p.id},'up')">
-          <i class="ti ti-thumb-up"></i> ${p.up}
-        </button>
-        <button class="btn-vote ${v==='down'?'voted-down':''}" onclick="vote('${sectionId}',${p.id},'down')">
-          <i class="ti ti-thumb-down"></i> ${p.down}
-        </button>
-      </div>
-    </div>`;
-  }).join('');
-
-  if (!showAll[sectionId] && hidden > 0) {
-    area.innerHTML += `<button class="btn-ver-mais" onclick="toggleShowAll('${sectionId}')">Weitere ${hidden} Vorschlag${hidden > 1 ? 'schläge' : ''} anzeigen</button>`;
-  } else if (showAll[sectionId] && list.length > VISIBLE_LIMIT) {
-    area.innerHTML += `<button class="btn-ver-mais" onclick="toggleShowAll('${sectionId}')">Weniger anzeigen</button>`;
+  if (answer) {
+    // move to answered
+    const letter = nextLetter();
+    state.answeredFromOpen.push({
+      letter,
+      question: rewrite || q.text,
+      answer
+    });
+    if (isNew) state.newQuestions = state.newQuestions.filter(x => x.id !== qid);
+    else state.openQuestions = state.openQuestions.filter(x => x.id !== qid);
+  } else if (rewrite && rewrite !== q.text) {
+    q.altered = true;
+    q.alteredText = rewrite;
   }
+
+  saveState(state);
+  renderAll();
 }
 
-function downloadFile() {
+/* ── ADD NEW QUESTION ── */
+function showAddNewQuestion() {
+  const panel = document.getElementById('new-q-panel');
+  if (panel) panel.style.display = 'block';
+}
+
+function submitNewQuestion() {
+  const el = document.getElementById('new-q-text');
+  if (!el) return;
+  const text = el.value.trim();
+  if (!text) return;
+  state.newQuestions.push({ id: 'nq-' + Date.now(), text, altered: false, alteredText: null });
+  saveState(state);
+  renderAll();
+}
+
+/* ── PRINT ── */
+function triggerPrint() {
+  // Apply all edits to the DOM before printing
+  sections.forEach(s => {
+    const el = document.getElementById('text-' + s.id);
+    if (!el) return;
+    const effective = getEffectiveText(s.id, s.text);
+    el.innerHTML = textToHtml(effective);
+  });
+
+  // Apply edits to answered questions
+  const allAnswered = [...answeredQuestions, ...state.answeredFromOpen];
+  allAnswered.forEach(q => {
+    const key = 'aq-edit-' + q.letter;
+    if (state.edits[key]) {
+      const ansEl = document.getElementById('aq-ans-' + q.letter);
+      if (ansEl) ansEl.innerHTML = textToHtml(state.edits[key].replacement);
+    }
+  });
+
+  // Build unanswered questions print block
+  const allOpen = [...state.openQuestions, ...state.newQuestions];
+  let printBlock = document.getElementById('print-unanswered-block');
+  if (printBlock) printBlock.remove();
+
+  if (allOpen.length > 0) {
+    printBlock = document.createElement('div');
+    printBlock.id = 'print-unanswered-block';
+    printBlock.className = 'print-unanswered';
+    printBlock.innerHTML = `
+      <div class="print-unanswered-warning">
+        Offene Fragen sind in Ordnung — man muss nicht jedes Problem selbst lösen, aber offene Fragen können nicht in das Dokument zur Abstimmung aufgenommen werden.
+      </div>
+      ${allOpen.map(q => `<p style="margin-bottom:1rem;"><strong>Offene Frage:</strong> ${q.alteredText || q.text}</p>`).join('')}
+    `;
+    document.body.appendChild(printBlock);
+  }
+
   window.print();
+
+  // Restore original text after print
+  setTimeout(() => {
+    sections.forEach(s => {
+      const el = document.getElementById('text-' + s.id);
+      if (el) el.innerHTML = textToHtml(s.text);
+    });
+    allAnswered.forEach(q => {
+      const ansEl = document.getElementById('aq-ans-' + q.letter);
+      if (ansEl) ansEl.innerHTML = textToHtml(q.answer);
+    });
+    if (printBlock) printBlock.remove();
+  }, 1000);
 }
 
+/* ── INIT ── */
 renderAll();
 </script>
 </body>
